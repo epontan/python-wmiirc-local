@@ -1,4 +1,5 @@
 import os
+import dbus
 from pygmi import fs, _
 
 import wmiirc
