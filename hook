@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# (re)start autocutsel to keep clipboard and X11 selection buffer in sync
+killall autocutsel 2>/dev/null
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
+
+# (re)start udiske for automounting functionality
+if echo "$HOST" | egrep -q 'tauron|virgon'; then
+    killall udiskie 2>/dev/null
+    udiskie -2 -a -N -T &
+fi
+
+# Disable touchpad tapping
+if echo "$HOST" | egrep -q '^elx|virgon'; then
+    synclient MaxTapTime=0
+fi
+
+# ELX specific hacks
+if echo "$HOST" | grep -q '^elx'; then
+    xset m 5/3 4 # Lower mouse sensitity (default: 2/1 4)
+    xset -dpms # Disable DPMS (kernel panics sometimes when trying to recover)
+fi
