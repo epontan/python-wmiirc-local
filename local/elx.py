@@ -4,6 +4,8 @@ from local import AbortModuleLoadException
 if not gethostname().startswith('elx'):
     raise AbortModuleLoadException
 
+import shlex
+
 import wmiirc
 import wmiirc_local
 from wmiirc_local import *
@@ -50,13 +52,11 @@ wmiirc_local.system_ctl = _system_ctl
 # Actions
 class Actions(wmiirc_local.Actions):
     def xrandr_laptop(self, args=''):
-        cmd = shlex.split('xrandr --output eDP1 --auto --primary --output DP1-1 --off --output DP1-2 --off --output DP1-3 --off --output HDMI1 --off --output VIRTUAL1 --off')
+        cmd = shlex.split('xrandr --output eDP1 --crtc 0 --auto --primary --output DP1-1 --off --output DP1-2 --off --output DP1-3 --off --output HDMI1 --off --output VIRTUAL1 --off')
         call(*cmd)
         setbackground()
     def xrandr_work(self, args=''):
-        cmd = shlex.split('xrandr --output eDP1 --off --output DP1-1 --auto --primary')
-        call(*cmd)
-        cmd = shlex.split('xrandr --output DP1-3 --auto --left-of DP1-1')
+        cmd = shlex.split('xrandr --output eDP1 --crtc 0 --off --output DP1-1 --crtc 1 --auto --primary --output DP1-3 --crtc 2 --auto --left-of DP1-1')
         call(*cmd)
         setbackground()
 wmiirc.actions = Actions()
@@ -91,6 +91,13 @@ events.bind({
     'ClientFocus': lambda c: nx_handler.check_client(c),
     'AreaFocus': lambda a: nx_handler.check_area(a),
 })
+
+
+# Lower mouse sensitity (default: 2/1 4)
+call('xset', 'm', '5/3', '4')
+
+# Disable DPMS (kernel panics sometimes when trying to recover)
+call('xset', '-dpms')
 
 
 # vim:se sts=4 sw=4 et:
