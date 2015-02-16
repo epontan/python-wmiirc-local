@@ -2,7 +2,8 @@ from pygmi import call
 
 
 def command_exists(command):
-    p = call('which', command, background=True)
+    null = open('/dev/null', 'w')
+    p = call('which', command, stdout=null, stderr=null, background=True)
     return p.wait() == 0
 
 
