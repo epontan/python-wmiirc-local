@@ -20,13 +20,14 @@ wmiirc.terminal = 'wmiir', 'setsid', 'uxterm'
 
 wmii.rules += (
     (ur'Wfica', dict(tags='win')),
+    (ur'^pdfpc:', dict(tags='pres')),
 )
 
 
 # Right bar status plugins
 mail.Mail()
 volume.Volume(device='pulse')
-network.NetworkManager()
+network.Wicd()
 ps.Cpu()
 ps.Memory()
 temperature.Temperature()
@@ -52,11 +53,18 @@ wmiirc_local.system_ctl = _system_ctl
 # Actions
 class Actions(wmiirc_local.Actions):
     def xrandr_laptop(self, args=''):
-        cmd = shlex.split('xrandr --output eDP1 --crtc 0 --auto --primary --output DP1-1 --off --output DP1-2 --off --output DP1-3 --off --output HDMI1 --off --output VIRTUAL1 --off')
+        cmd = shlex.split('xrandr --output eDP1 --crtc 0 --auto --primary --output DP1-1 --off --output DP1-2 --off --output DP1-3 --off --output DP1 --off --output HDMI1 --off')
         call(*cmd)
         setbackground()
     def xrandr_work(self, args=''):
         cmd = shlex.split('xrandr --output eDP1 --crtc 0 --off --output DP1-1 --crtc 1 --auto --primary --output DP1-3 --crtc 2 --auto --left-of DP1-1')
+        call(*cmd)
+        setbackground()
+    def xrandr_pres(self, args=''):
+        output = Menu(choices=lambda: ['mDP/VGA', 'HDMI'], prompt='Display output: ')()
+        if output == 'HDMI': output = 'HDMI1'
+        else: output = 'DP1'
+        cmd = shlex.split('xrandr --output %s --auto --above eDP1' % output)
         call(*cmd)
         setbackground()
 wmiirc.actions = Actions()
