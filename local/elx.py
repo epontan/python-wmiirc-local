@@ -21,6 +21,7 @@ wmiirc.terminal = 'wmiir', 'setsid', 'uxterm'
 wmii.rules += (
     (ur'Wfica', dict(tags='win')),
     (ur'^pdfpc:', dict(tags='pres')),
+    (ur'^mirror:Mirror:', dict(tags=r'/./', fullscreen=True)),
 )
 
 
