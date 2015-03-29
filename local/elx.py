@@ -91,6 +91,8 @@ keys.bind('nx', (
         lambda k: nx_handler.toggle()),
     ('%(mod)s-Shift-e', "Reset mouse positions for NX toggle",
         lambda k: nx_handler.reset()),
+    ('%(mod)s-Shift-f', "Toggle fullscreen of NX client",
+        lambda k: nx_handler.toggle_fullscreen()),
 ))
 
 
