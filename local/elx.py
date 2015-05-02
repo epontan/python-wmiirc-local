@@ -10,6 +10,7 @@ import wmiirc
 import wmiirc_local
 from wmiirc_local import *
 
+from plugins import notice
 from plugins import volume, ps, temperature, clock
 from plugins import acpi, network
 from plugins import mail, track
@@ -71,13 +72,20 @@ class Actions(wmiirc_local.Actions):
 wmiirc.actions = Actions()
 
 
+# Screen brightness control
+def adjust_brightness(adjustment):
+    call("xbacklight", "-time", "0", "-steps", "1", "-inc", str(adjustment))
+    percentage = round(float(call("xbacklight")))
+    notice.write("Brightness %d%%" % percentage)
+
+
 # Key bindings
 keys.bind('main', (
     "Screen brightness",
     ('XF86MonBrightnessUp', "Increase the screen brightness",
-        lambda k: call("xbacklight", "-inc", "25", background=True)),
+        lambda k: adjust_brightness(25)),
     ('XF86MonBrightnessDown', "Decrease the screen brightness",
-        lambda k: call("xbacklight", "-dec", "25", background=True)),
+        lambda k: adjust_brightness(-25)),
 
     "NX",
     ('%(mod)s-e', "Toggle between NX client and other",
