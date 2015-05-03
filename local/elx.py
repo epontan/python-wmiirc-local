@@ -12,7 +12,7 @@ from wmiirc_local import *
 
 from plugins import notice
 from plugins import volume, ps, temperature, clock
-from plugins import acpi, network
+from plugins import upower, network
 from plugins import mail, track
 
 
@@ -33,7 +33,7 @@ network.Wicd()
 ps.Cpu()
 ps.Memory()
 temperature.Temperature()
-acpi.Battery()
+upower.Battery()
 work = track.Work()
 clock.Clock()
 

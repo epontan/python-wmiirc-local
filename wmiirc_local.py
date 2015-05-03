@@ -74,9 +74,9 @@ def lock(blank=False):
     return call(*cmd, background=True)
 
 def system_ctl(action):
-    logind = dbus_instance.get_system_bus().get_object('org.freedesktop.login1',
+    logind = dbus_instance.get_system_bus('org.freedesktop.login1',
             '/org/freedesktop/login1')
-    manager = dbus.Interface(logind, 'org.freedesktop.login1.Manager')
+    manager = logind.get_interface('org.freedesktop.login1.Manager')
     getattr(manager, action)(True)
 
 
