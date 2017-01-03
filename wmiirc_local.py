@@ -8,7 +8,6 @@ from wmiirc import *
 from plugins import dbus_instance
 from plugins import notice
 from plugins import spotify
-from plugins import nx
 
 
 # Theme
@@ -45,12 +44,7 @@ wmii.rules = (
     (ur':Thunderbird:', dict(tags='mail')),
     (ur'^libreoffice:', dict(tags='docs', group=0)),
     (ur'^spotify:', dict(tags='music', floating=False)),
-    (ur'^X2GoAgent:|:NX - ', dict(tags='x', floating=False)),
 )
-
-
-# Initialize plugins
-nx_handler = nx.NXHandler()
 
 
 # Right bar status plugins
@@ -141,16 +135,6 @@ keys.bind('main', (
         lambda k: spotify.next()),
     ('XF86AudioStop', "Quit spotify",
         lambda k: spotify.quit()),
-
-    "NX",
-    ('%(mod)s-x', "Move to x tag and make passthrough",
-        lambda k: tags.select('x') or setattr(keys, 'mode', 'nx')),
-))
-
-keys.bind('nx', (
-    "NX",
-    ('%(mod)s-x', "Move out from x tag and restore passthrough",
-        lambda k: tags.select(tags.LAST) or setattr(keys, 'mode', 'main')),
 ))
 
 

@@ -86,30 +86,7 @@ keys.bind('main', (
         lambda k: adjust_brightness(25)),
     ('XF86MonBrightnessDown', "Decrease the screen brightness",
         lambda k: adjust_brightness(-25)),
-
-    "NX",
-    ('%(mod)s-e', "Toggle between NX client and other",
-        lambda k: nx_handler.toggle()),
-    ('%(mod)s-Shift-e', "Reset mouse positions for NX toggle",
-        lambda k: nx_handler.reset()),
 ))
-
-keys.bind('nx', (
-    "NX",
-    ('%(mod)s-e', "Toggle between NX client and other",
-        lambda k: nx_handler.toggle()),
-    ('%(mod)s-Shift-e', "Reset mouse positions for NX toggle",
-        lambda k: nx_handler.reset()),
-    ('%(mod)s-Shift-f', "Toggle fullscreen of NX client",
-        lambda k: nx_handler.toggle_fullscreen()),
-))
-
-
-# Events
-events.bind({
-    'ClientFocus': lambda c: nx_handler.check_client(c),
-    'AreaFocus': lambda a: nx_handler.check_area(a),
-})
 
 
 # Lower mouse sensitity (default: 2/1 4)
